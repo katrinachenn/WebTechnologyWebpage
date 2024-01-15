@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="Assignment5.css">
+    <title>CSCI 355 Web Technology Course Webpage</title>
+</head>
+<body>
+
+<div class="navbar">
+    <a href="#home">Home</a>
+    <div class="subnav">
+        <button class="subnavbtn">Course <i class="fa fa-caret-down"></i></button>
+        <div class="subnav-content">
+            <a href="https://gaia.cs.umass.edu/kurose_ross/eighth.php">Kurose and Ross</a>
+            <a href="http://w3schools.com">W3Schools</a>
+            <a href="https://www.geeksforgeeks.org/web-development/">Geeks for Geeks</a>
+        </div>
+    </div>
+    <div class="subnav">
+        <button class="subnavbtn">Browser <i class="fa fa-caret-down"></i></button>
+        <div class="subnav-content">
+            <a id="navigatorLink">Navigator Info</a>
+            <a id="windowLink">Window Info</a>
+            <a id="screenLink">Screen Info</a>
+            <a id="locationLink">Location Info</a>
+            <a id="geolocationLink">Geolocation Info</a>
+        </div>
+    </div>
+    <div class="subnav">
+        <button class="subnavbtn">About <i class="fa fa-caret-down"></i></button>
+        <div class="subnav-content">
+            <a id="developerLink">Developer Info</a>
+            <a id="contactLink">Contact Me</a>
+        </div>
+    </div>
+</div>
+
+<div class="content">
+    <h3>Welcome to Katrina Chen's Web Technology Course Webpage</h3>
+    <p>Feel free to Explore the course, browser details, and developer information.</p>
+</div>
+
+<section id="developerSection" class="info-section">
+    <h4>Developer Information</h4>
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQG_Gk_Lynpib6DKHioVroo9TyZhQMDtA1Lbk0NNB_LYNR3WhZBHm7r-4WBQyw9rUa1ADY&usqp=CAU" alt="Picture of Developer">
+    <p>Hi, my name is Katrina Chen. I am a senior at Queens College majoring in computer science.
+        Currently, I serve as a .NET Application Developer at the NYC Department of Transportation,
+        where I contribute to building internal multi-user applications for clients. As I approach graduation,
+        I'm eager to expand my experiences and explore new careers. I am looking for a long term working full time,
+        particularly working in database or full stack development. Feel free to contact me below.</p>
+</section>
+
+<section id="contactSection" class="info-section">
+    <h2>Contact Me</h2>
+    <form action="mailto:katrina.chen55@qmail.cuny.edu" method="post" enctype="text/plain">
+    <div class="form-field">
+    <label for="name">Name:</label>
+    <input type="text" name="name" id="name">
+    </div>
+    <div class="form-field">
+    <label for="mail">E-mail:</label>
+    <input type="text" name="mail" id="mail">
+    </div>
+    <div class="form-field">
+    <label for="comment">Comment:</label>
+    <textarea name="comment" id="comment" rows="4"></textarea>
+    </div>
+    <div class="form-actions">
+    <input type="submit" value="Send">
+    <input type="reset" value="Reset">
+</div>
+</form>
+
+</section>
+<section id="windowInfoSection" class="info-section" style="display: none;"></section>
+<section id="navInfoSection" class="info-section" style="display: none;"></section>
+<section id="screenInfoSection" class="info-section" style="display: none;"></section>
+<section id="locationInfoSection" class="info-section" style="display: none;"></section>
+<section id="geolocationInfoSection" class="info-section" style="display: none;">
+    <h2>Geolocation Information</h2>
+    <button class="geoButton" id="getGeoLocationButton">Get Latitude Longitude</button> (Please click on the button multiple times to get the latlong)
+    <p id="demo"></p>
+</section>
+
+</body>
+</html>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    function hideAllSections() {
+        document.querySelectorAll('section.info-section').forEach(function(section) {
+            section.style.display = 'none';
+        });
+    }
+    function updateWindowInfo() {
+        document.getElementById("windowInfoSection").innerHTML =
+            "Browser inner window width: " + window.innerWidth + "px<br>" +
+            "Browser inner window height: " + window.innerHeight + "px";
+    }
+    function updateNavigatorInfo() {
+        var navInfo = [
+            "navigator.appCodeName is <b>" + navigator.appCodeName + "</b>",
+            "navigator.appName is <b>"  + navigator.appName + "</b>",
+            "navigator.appVersion is <b>"  + navigator.appVersion + "</b>",
+            "navigator.userAgent is <b>"  + navigator.userAgent + "</b>",
+            "navigator.platform is <b>"  + navigator.platform + "</b>",
+            "navigator.language is <b>"  + navigator.language + "</b>",
+            "navigator.product is <b>"  + navigator.product + "</b>"
+        ].join("<br>");
+
+        document.getElementById("navInfoSection").innerHTML = navInfo;
+    }
+    function updateScreenInfo() {
+        var screenInfo = [
+            "Screen Width: <b>" + screen.width + "</b>",
+            "Screen Height: <b>" + screen.height + "</b>",
+            "Available Screen Width: <b>" + screen.availWidth + "</b>",
+            "Available Screen Height: <b>" + screen.availHeight + "</b>",
+            "Screen Color Depth: <b>" + screen.colorDepth + "</b>",
+            "Screen Pixel Depth: <b>" + screen.pixelDepth + "</b>"
+        ].join("<br>");
+        document.getElementById("screenInfoSection").innerHTML = screenInfo;
+    }
+
+    function updateLocationInfo() {
+        var locationInfo = [
+            "Page location is <b>" + window.location.href + "</b>",
+            "Page hostname is <b>" + window.location.hostname + "</b>",
+            "Page path is <b>" + window.location.pathname + "</b>",
+            "Page protocol is <b>" + window.location.protocol + "</b>",
+        ].join("<br>");
+        document.getElementById("locationInfoSection").innerHTML = locationInfo;
+    }
+
+     function showPosition(position) {
+    var x = document.getElementById("demo");
+    x.innerHTML = "Latitude: " + "<b>" + position.coords.latitude + "</b>" +
+                  "<br>Longitude: " + "<b>" + position.coords.longitude + "</b>";
+}
+
+    function getLocation() {
+        var x = document.getElementById("demo");
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+        } else {
+            x.innerHTML = "Geolocation is not supported by this browser.";
+        }
+    }
+
+    function setupEventListeners() {
+
+         document.getElementById('geolocationLink').addEventListener('click', function(event) {
+        event.preventDefault();
+        hideAllSections();
+        document.getElementById('geolocationInfoSection').style.display = 'block';
+    });
+
+    document.getElementById('getGeoLocationButton').addEventListener('click', function(event) {
+        event.preventDefault();
+        getLocation();
+    });
+
+        document.getElementById('windowLink').addEventListener('click', function(event) {
+            event.preventDefault();
+            hideAllSections();
+            updateWindowInfo();
+            document.getElementById('windowInfoSection').style.display = 'block';
+        });
+
+        document.getElementById('navigatorLink').addEventListener('click', function(event) {
+            event.preventDefault();
+            hideAllSections();
+            updateNavigatorInfo();
+            document.getElementById('navInfoSection').style.display = 'block';
+        });
+         document.getElementById('screenLink').addEventListener('click', function(event) {
+            event.preventDefault();
+            hideAllSections();
+            updateScreenInfo();
+            document.getElementById('screenInfoSection').style.display = 'block';
+        });
+         document.getElementById('locationLink').addEventListener('click', function(event) {
+            event.preventDefault();
+            hideAllSections();
+            updateLocationInfo();
+            document.getElementById('locationInfoSection').style.display = 'block';
+        });
+
+        document.getElementById('developerLink').addEventListener('click', function(event) {
+            event.preventDefault();
+            hideAllSections();
+            document.getElementById('developerSection').style.display = 'block';
+        });
+
+        document.getElementById('contactLink').addEventListener('click', function(event) {
+            event.preventDefault();
+            hideAllSections();
+            document.getElementById('contactSection').style.display = 'block';
+        });
+    }
+    setupEventListeners();
+});
+
+</script>
